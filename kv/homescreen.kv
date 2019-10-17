@@ -27,16 +27,17 @@
                 source: "icons/003-sunset.png"
             Image:
                 source: "icons/avatars/man.png"
+                id: avatar_image
             Image:
                 source: "icons/007-crescent-moon.png"
         Label:
             # Streak label
             pos_hint: {"top": .7, "left": 1}
             size_hint: 1, .1
-            text: "12 Day Streak"
             id: streak_label
         GridLayout:
             # Banner grid
+            id: banner_grid
             cols: 1
             pos_hint: {"top": .6, "left": 1}
             size_hint: 1, .4

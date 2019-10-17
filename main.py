@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.uix.button import ButtonBehavior
 from kivy.uix.image import Image
+from workoutbanner import WorkoutBanner
 import requests
 import json
 
@@ -27,14 +28,26 @@ class MainApp(App):
         result = requests.get("https://friendly-fitness-97308.firebaseio.com/" + str(self.my_friend_id) + ".json")
         print("Was is okay?", result.ok)
         data = json.loads(result.content.decode())
-        print(data)
+        # Get and update avatar image
+        avatar_image = self.root.ids['home_screen'].ids['avatar_image']
+        avatar_image.source = "icons/avatars/" + data['avatar']
+
+        # Get and update streak label
+        streak_label = self.root.ids['home_screen'].ids['streak_label']
+        streak_label.text = str(data['streak']) + " DAY STREAK!"
+
+        banner_grid = self.root.ids['home_screen'].ids['banner_grid']
         workouts = data['workout'][1:]
         for workout in workouts:
-            # print(workout)
-            print(workout['workout_image'])
-            print(workout['units'])
+            # Populate workout grid in home screen
+            W = WorkoutBanner(workout_image=workout['workout_image'], description=workout['description'],
+                              type_image = workout['type_image'],number = workout['number'],units = workout['units'],
+                              likes=workout['likes'])
+            banner_grid.add_widget(W)
 
-        # Populate workout grid in home screen
+
+
+
 
 
 
