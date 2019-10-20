@@ -2,12 +2,19 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
 from kivy.uix.image import Image
+from kivy.graphics import Color, Rectangle
+import kivy.utils
 
 class WorkoutBanner(GridLayout):
-    rows = 1
+
 
     def __init__(self, **kwargs):
+        self.rows = 1
         super().__init__()
+        with self.canvas.before:
+            Color(rgt=(kivy.utils.get_color_from_hex("#67697C")))
+            self.rect = Rectangle(size=self.size, pos= self.pos)
+        self.bind(pos=self.update_rect, size=self.update_rect)
 
         # Need left FloatLayout
         left = FloatLayout()
@@ -34,6 +41,10 @@ class WorkoutBanner(GridLayout):
         self.add_widget(left)
         self.add_widget(middle)
         self.add_widget(right)
+
+    def update_rect(self, *args):
+        self.rect.pos = self.pos
+        self.rect.size = self.size
 
 
 
